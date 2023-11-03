@@ -1,0 +1,62 @@
+package modelaccessibletest.modelaccessibletest;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.beust.jcommander.internal.Console;
+
+public class testcasesmodel {
+
+	private WebDriver driver;
+
+	@BeforeTest
+	public void setUp() {
+		System.setProperty("webdriver.chrome.driver", "D:\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog/");
+	}
+
+//   this testcase for checking role and click addressbtn
+
+	@Test(priority = 1)
+	public void testModalWithRole() {
+		WAIpageopen waiPage = new WAIpageopen(driver);
+		WaiMethod waimethod= new WaiMethod(driver);
+		
+		WebElement addressbtn = waiPage.GetAddressButton();
+		addressbtn.click();
+		WebElement addDelivaryModal = waiPage.GetAddDelivaryModal();
+		waimethod.checkRolesandAttribute(addDelivaryModal,"dialog","role is not match","role");
+		WebElement cancelbtn = waiPage.GetCancelBtn();
+		cancelbtn.click();
+	}
+
+	
+	@Test(priority = 2)
+	public void checkModelWithAriaLabelledBy() {
+		WAIpageopen waiPage = new WAIpageopen(driver);
+		WaiMethod waimethod= new WaiMethod(driver);
+		WebElement addressbtn = waiPage.GetAddressButton();
+		addressbtn.click();
+		WebElement checkModelAriaLabelledBy = waiPage.GetAddDelivaryModal();
+		waimethod.checkRolesandAttribute(checkModelAriaLabelledBy,"dialog1_label","Element's aria-labelledby attribute is incorrect","aria-labelledby");
+		WebElement cancelbtn = waiPage.GetCancelBtn();
+		cancelbtn.click();
+	}
+	
+	@AfterTest
+	private void closeChromeBroswer() {
+		driver.quit();
+	}
+}
