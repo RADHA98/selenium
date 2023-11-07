@@ -13,7 +13,7 @@ public class DialogPage {
 	}
 
 	By addressbtn = By.xpath("//*[@id=\"ex1\"]/button");
-	By AddDeliveryAddressmodel = By.xpath("//*[@id=\"dialog1\"]");
+	By AddDeliveryAddressmodal = By.xpath("//*[@id=\"dialog1\"]");
 
 	By street = By.xpath("//*[@id=\"dialog1\"]/div[1]/div[1]/label/input");
 	By city = By.xpath("//*[@id=\"dialog1\"]/div[1]/div[2]/label/input");
@@ -31,7 +31,7 @@ public class DialogPage {
 	}
 
 	public WebElement getAddDelivaryModal() {
-		return driver.findElement(AddDeliveryAddressmodel);
+		return driver.findElement(AddDeliveryAddressmodal);
 	}
 
 	public WebElement enterStreet() {
