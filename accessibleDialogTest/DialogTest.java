@@ -1,4 +1,4 @@
-package modelaccessibletest.accessibleDialogTest;
+package com.pages;
 
 import java.util.List;
 
@@ -7,30 +7,43 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import modelaccessibletest.modelaccessibletest.WAIpageopen;
-import modelaccessibletest.modelaccessibletest.WaiMethod;
 
 public class DialogTest {
+    private WebDriver driver;
+    private ChromeOptions options;
+    private DialogPage dialogPage;
+    private AssertDialog assertDialog;
 
-	private WebDriver driver;
-//	DialogPage dialogPage = new DialogPage(driver);
-//	AssertDialog assertDialog= new AssertDialog(driver);
-	DialogPage dialogPage;
-	AssertDialog assertDialog;
+    @BeforeTest
+    public void setUp() {
+        // Set driver path dynamically or through system properties/environment variables
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Admin\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+        options = new ChromeOptions();
+        
+        options.addArguments("--remote-allow-origins=*");
+       
+        driver = new ChromeDriver(options);
+        try {
+            Thread.sleep(5000); // Add a delay to allow the browser to fully launch
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-	@BeforeTest
-	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "D:\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog/");
-		dialogPage = new DialogPage(driver);
-		assertDialog = new AssertDialog(driver);
-	}
+        driver.manage().window().maximize();
+        driver.get("https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog/");
+        dialogPage = new DialogPage(driver);
+        assertDialog = new AssertDialog(driver);
+    }
+
 
 	@Test(priority = 1)
 	public void testModalWithRole() {
@@ -111,18 +124,19 @@ public class DialogTest {
 			WebElement lastInteractiveElement = allInteractiveElements.get(elementCount - 1);
 
 			assertDialog.performFocusMaintain(firstInteractiveElement, lastInteractiveElement, Keys.TAB, Keys.SHIFT,
-					elementCount);
-
-		} else {
-			System.out.println("No interactive elements found in the modal.");
-		}
+					elementCount,"No interactive elements found in the modal.");
+		} 
 
 		WebElement cancelbtn = dialogPage.getCancelBtn();
 		cancelbtn.click();
 	}
+	
+
 
 	@AfterTest
 	private void closeChromeBroswer() {
+		 if (driver != null) {
 		driver.quit();
 	}
-}
+
+}}
