@@ -1,4 +1,4 @@
-package modelaccessibletest.accessibleDialogTest;
+package com.pages;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -6,8 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
-public class AssertDialog {
 
+
+
+
+
+
+public class AssertDialog {
 	private WebDriver driver;
 
 	public AssertDialog(WebDriver driver) {
@@ -37,13 +42,18 @@ public class AssertDialog {
 	}
 
 	public void performFocusMaintain(WebElement firstElement, WebElement lastElement, Keys tabKey, Keys shiftTabKey,
-			int elementCount) throws InterruptedException {
-		Actions actions = new Actions(driver);
-		actions.moveToElement(firstElement).sendKeys(tabKey).perform();
+		int elementCount,String description) throws InterruptedException {
+	Actions actions = new Actions(driver);
+	actions.moveToElement(firstElement).sendKeys(tabKey).perform();
 		for (int i = 1; i < elementCount; i++) {
-			actions.sendKeys(tabKey).perform();
-			Thread.sleep(2000);
-		}
-		actions.keyDown(Keys.SHIFT).sendKeys(shiftTabKey).keyUp(Keys.SHIFT).perform();
+		actions.sendKeys(tabKey).perform();
+		Thread.sleep(2000);		}
+		WebElement activeElement = driver.switchTo().activeElement();
+		System.out.println("Active Element: " + activeElement.toString());
+
+		   actions.keyDown(Keys.SHIFT).sendKeys(Keys.TAB).keyUp(Keys.SHIFT).perform();
+	        Thread.sleep(2000); 
 	}
+	
+
 }
